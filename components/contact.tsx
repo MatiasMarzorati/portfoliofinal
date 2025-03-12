@@ -1,42 +1,42 @@
-// components/contact.tsx
-'use client'
+"use client"
 
-import { useState } from 'react'
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { MapPin, Mail, Phone, Loader2 } from 'lucide-react'
+import { MapPin, Mail, Phone, Loader2, FileText } from "lucide-react"
 import { sendContactEmail } from "@/actions/send-email"
 import { useToast } from "@/hooks/use-toast"
 
 export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const { toast } = useToast()
 
   async function handleSubmit(formData: FormData) {
     setIsSubmitting(true)
-    
+    setErrorMessage(null)
+
     try {
       const result = await sendContactEmail(formData)
-      
+
       if (result.success) {
-        toast.success(result.message, {
-          description: "I'll get back to you as soon as possible."
-        })
+        // Pass the message directly to toast
+        toast(`Success! ${result.message}`)
         // Reset the form
-        const form = document.getElementById('contact-form') as HTMLFormElement
+        const form = document.getElementById("contact-form") as HTMLFormElement
         form.reset()
       } else {
-        toast.error(result.message, {
-          description: "Please try again or contact me directly via email."
-        })
+        setErrorMessage(result.message)
+        // Pass the error message directly to toast
+        toast(`Error: ${result.message}`)
       }
     } catch (error) {
-      const errorMsg = error instanceof Error ? error.message : 'Something went wrong. Please try again later.'
-      toast.error("Error sending message", {
-        description: errorMsg
-      })
+      const errorMsg = error instanceof Error ? error.message : "Something went wrong. Please try again later."
+      setErrorMessage(errorMsg)
+      // Pass the error message directly to toast
+      toast(`Error: ${errorMsg}`)
     } finally {
       setIsSubmitting(false)
     }
@@ -56,7 +56,7 @@ export function Contact() {
           </div>
         </div>
         <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 py-12 lg:grid-cols-[1fr_2fr]">
-          <div className="flex items-center">
+          <div className="flex flex-col gap-6">
             <Card className="bg-white dark:bg-black border border-[#09b479]/20 w-full">
               <CardHeader>
                 <CardTitle className="text-2xl text-gray-900 dark:text-white">Contact Information</CardTitle>
@@ -94,6 +94,14 @@ export function Contact() {
                   </a>
                 </div>
               </CardContent>
+              <CardFooter>
+                <Button className="w-full bg-[#09b479] hover:bg-[#09b479]/90 text-white" asChild>
+                  <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
+                    <FileText className="mr-2 h-5 w-5" />
+                    View Resume
+                  </a>
+                </Button>
+              </CardFooter>
             </Card>
           </div>
           <Card className="bg-white dark:bg-black border border-[#09b479]/20">
@@ -105,6 +113,9 @@ export function Contact() {
             </CardHeader>
             <form id="contact-form" action={handleSubmit}>
               <CardContent className="space-y-4">
+                {errorMessage && (
+                  <div className="p-3 bg-red-100 border border-red-400 text-red-700 rounded">{errorMessage}</div>
+                )}
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <label htmlFor="firstName" className="text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -170,8 +181,8 @@ export function Contact() {
                 </div>
               </CardContent>
               <CardFooter className="flex flex-col space-y-2">
-                <Button 
-                  type="submit" 
+                <Button
+                  type="submit"
                   className="w-full bg-[#09b479] hover:bg-[#09b479]/90 text-white"
                   disabled={isSubmitting}
                 >
@@ -181,15 +192,12 @@ export function Contact() {
                       Sending...
                     </>
                   ) : (
-                    'Send Message'
+                    "Send Message"
                   )}
                 </Button>
                 <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
                   Alternatively, you can email me directly at{" "}
-                  <a 
-                    href="mailto:matiasfedericomarzorati@gmail.com" 
-                    className="text-[#09b479] hover:underline"
-                  >
+                  <a href="mailto:matiasfedericomarzorati@gmail.com" className="text-[#09b479] hover:underline">
                     matiasfedericomarzorati@gmail.com
                   </a>
                 </p>
@@ -201,3 +209,4 @@ export function Contact() {
     </section>
   )
 }
+

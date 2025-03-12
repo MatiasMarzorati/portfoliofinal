@@ -3,7 +3,7 @@
 import type React from "react"
 
 import { useState, useEffect } from "react"
-import { Menu, X } from "lucide-react"
+import { Menu, X, FileText } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Button } from "@/components/ui/button"
 import { motion, AnimatePresence } from "framer-motion"
@@ -43,12 +43,6 @@ export function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between px-4">
-        {/* Change this line:
-        <a href="#" onClick={(e) => handleScroll(e, "#")} className="text-xl font-bold text-primary">
-          MM
-        </a>
-
-        // To explicitly use the green color: */}
         <a href="#" onClick={(e) => handleScroll(e, "#")} className="text-xl font-bold text-[#09b479]">
           MM
         </a>
@@ -56,7 +50,6 @@ export function Navbar() {
         {/* Desktop Navigation */}
         <div className="hidden md:flex md:items-center md:gap-6">
           {navItems.map((item) => (
-            // And update the hover effect on nav items:
             <a
               key={item.name}
               href={item.href}
@@ -66,11 +59,33 @@ export function Navbar() {
               {item.name}
             </a>
           ))}
+          <Button
+            asChild
+            size="sm"
+            variant="default"
+            className="bg-[#09b479] hover:bg-[#09b479]/90 text-white rounded-full"
+          >
+            <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="flex items-center">
+              <FileText className="mr-1 h-4 w-4" />
+              <span>Resume</span>
+            </a>
+          </Button>
           <ThemeToggle />
         </div>
 
         {/* Mobile Navigation Toggle */}
         <div className="flex items-center gap-4 md:hidden">
+          <Button
+            asChild
+            size="sm"
+            variant="default"
+            className="bg-[#09b479] hover:bg-[#09b479]/90 text-white rounded-full"
+          >
+            <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="flex items-center">
+              <FileText className="mr-1 h-4 w-4" />
+              <span>Resume</span>
+            </a>
+          </Button>
           <ThemeToggle />
           <Button variant="ghost" size="icon" onClick={toggleMenu} className="md:hidden">
             {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -96,7 +111,6 @@ export function Navbar() {
               className="flex flex-col space-y-4 pb-4"
             >
               {navItems.map((item) => (
-                // Also update the mobile nav items:
                 <a
                   key={item.name}
                   href={item.href}
