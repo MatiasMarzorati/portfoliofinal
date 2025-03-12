@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { ExternalLink, Github } from "lucide-react"
+import { ExternalLink, Github } from 'lucide-react'
 import { LinkPreview } from "@/components/ui/link-preview"
 
 export function Projects() {
@@ -20,11 +20,10 @@ export function Projects() {
       title: "PDF Summarization for Police Education",
       description:
         "An application to summarize advanced education PDFs for police officers at the Public Security Institute.",
-      image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Captura%20de%20pantalla%202025-03-12%20a%20la%28s%29%2012.29.52%E2%80%AFp.%C2%A0m.-gP2pixIT8lx9XArSj251F7Fo15PvcF.png",
+      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Captura%20de%20pantalla%202025-03-12%20a%20la%28s%29%2012.29.52%E2%80%AFp.%C2%A0m.-gP2pixIT8lx9XArSj251F7Fo15PvcF.png",
       tags: ["Next.js", "React", "Python", "Flask"],
       // Remove demoUrl and githubUrl properties
-    },
+    }
   ]
 
   return (
@@ -90,13 +89,13 @@ export function Projects() {
                     </Button>
                   </LinkPreview>
                 )}
-                {project.demoUrl && (
+                {project.demoUrl && project.demoPreviewImage ? (
                   <LinkPreview
                     url={project.demoUrl}
                     width={200}
                     height={150}
                     className="[&_[data-radix-hover-card-content]]:z-[60]"
-                    isStatic={project.demoPreviewImage ? true : false}
+                    isStatic={true}
                     imageSrc={project.demoPreviewImage}
                   >
                     <Button size="sm" className="bg-[#09b479] text-white hover:bg-[#09b479]/90 text-xs">
@@ -104,7 +103,19 @@ export function Projects() {
                       Demo
                     </Button>
                   </LinkPreview>
-                )}
+                ) : project.demoUrl ? (
+                  <LinkPreview
+                    url={project.demoUrl}
+                    width={200}
+                    height={150}
+                    className="[&_[data-radix-hover-card-content]]:z-[60]"
+                  >
+                    <Button size="sm" className="bg-[#09b479] text-white hover:bg-[#09b479]/90 text-xs">
+                      <ExternalLink className="mr-2 h-3 w-3" />
+                      Demo
+                    </Button>
+                  </LinkPreview>
+                ) : null}
               </CardFooter>
             </Card>
           ))}
@@ -113,4 +124,3 @@ export function Projects() {
     </section>
   )
 }
-
