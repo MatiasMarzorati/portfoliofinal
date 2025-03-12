@@ -80,8 +80,7 @@ export function Hero() {
                 />
               </h1>
               <p className="max-w-[600px] text-muted-foreground md:text-xl -mt-1">
-                A passionate full-stack developer specializing in creating beautiful, functional, and user-centered
-                digital experiences.
+              I'm a full-stack developer currently in my fourth year of Computer Engineering. Since I was 17, I've been deeply passionate about technology, constantly exploring new trends and improving my skills. I thrive on building innovative solutions, solving complex problems, and continuously learning to stay ahead in the ever-evolving tech landscape.
               </p>
             </div>
             <div className="flex flex-col gap-2 min-[400px]:flex-row">
@@ -97,7 +96,7 @@ export function Hero() {
                 </a>
               </Button>
             </div>
-            <div className="flex gap-4">
+            <div className="flex gap-4 mt-4">
               <LinkPreview
                 url="https://github.com/matiasmarzorati"
                 className="text-[#09b479] hover:bg-[#09b479]/10"
@@ -130,7 +129,7 @@ export function Hero() {
               </Button>
             </div>
           </div>
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center mb-12 sm:mb-16">
             <div className="relative">
               <div className="absolute inset-0 rounded-full bg-gradient-to-r from-[#09b479] to-[#09b479]/50 blur-xl opacity-30 animate-pulse"></div>
               <img
